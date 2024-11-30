@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <!-- Link Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                background: linear-gradient(to right, #00c6ff, #0072ff);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+
+            #lyrics {
+                font-family: "Roboto", sans-serif;
+                font-size: 1.5em;
+                color: #fff;
+                text-align: center;
+                padding: 10px;
+                line-height: 1.8em;
+                max-width: 80%;
+                background: rgba(0, 0, 0, 0.6);
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            /* Animasi huruf satu per satu */
+            .letter {
+                display: inline-block;
+                opacity: 0;
+                animation: fadeInLetter 0.05s forwards;
+            }
+
+            @keyframes fadeInLetter {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="lyrics"></div>
+
+        <script>
+            const lyrics = [
+                "Try and pull that, got me acting shady",
+                "What's that supposed to be about, baby?",
+                "Go free up your vibe, stop acting crazy",
+                "You know I give you the good loving daily",
+                "Try and pull that, got me actin' shady",
+                "Oh",
+            ];
+
+            const lyricsDiv = document.getElementById("lyrics");
+
+            // Durasi jeda setiap baris dalam milidetik
+            const delays = [
+                3000, // Delay untuk baris pertama
+                3000, // Delay untuk baris kedua
+                3000, // Delay untuk baris ketiga
+                3000, // Delay untuk baris keempat
+                3000, // Delay untuk baris kelima
+                2000, // Delay untuk baris keenam
+            ];
+
+            // Function untuk menampilkan lirik sesuai dengan delay huruf demi huruf
+            let totalDelay = 0;
+            lyrics.forEach((line, index) => {
+                totalDelay += delays[index];
+                setTimeout(() => {
+                    const lineContainer = document.createElement("p");
+
+                    // Tampilkan huruf satu per satu
+                    line.split("").forEach((char, i) => {
+                        const span = document.createElement("span");
+                        span.textContent = char === " " ? "\u00A0" : char; // Menambahkan spasi jika karakter kosong
+                        span.classList.add("letter");
+                        span.style.animationDelay = `${i * 0.05}s`; // Delay setiap huruf 0.05 detik
+                        lineContainer.appendChild(span);
+                    });
+
+                    lyricsDiv.appendChild(lineContainer);
+                }, totalDelay);
+            });
+        </script>
+    </body>
+</html>
